@@ -30,29 +30,52 @@ becomes C. To change a message back, each letter is replaced by the one three be
 
 PROGRAM :-
 ```
-def caesar_cipher(text, shift, mode="encrypt"):
-    result = ""
+
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char plain[100], cipher[100];
+    int key, i, length;
+
+    printf("Enter the plain text: ");
+    scanf("%99s", plain);  // Limit input to 99 characters
+
+    printf("Enter the key value: ");
+    scanf("%d", &key);
+
+    printf("\nPLAIN TEXT: %s", plain);
+    printf("\nENCRYPTED TEXT: ");
     
-    if mode == "decrypt":
-        shift = -shift  
+    length = strlen(plain);
+    for (i = 0; i < length; i++) {
+        cipher[i] = plain[i] + key;
+        if (isupper(plain[i]) && cipher[i] > 'Z')
+            cipher[i] -= 26;
+        else if (islower(plain[i]) && cipher[i] > 'z')
+            cipher[i] -= 26;
+        
+        printf("%c", cipher[i]);
+    }
+    
+    cipher[length] = '\0';  // Null-terminate the cipher text
 
-    for char in text:
-        if char.isalpha():
-            shift_base = ord('A') if char.isupper() else ord('a')
-            result += chr((ord(char) - shift_base + shift) % 26 + shift_base)
-        else:
-            result += char  
+    printf("\nDECRYPTED TEXT: ");
+    for (i = 0; i < length; i++) {
+        plain[i] = cipher[i] - key;
+        if (isupper(cipher[i]) && plain[i] < 'A')
+            plain[i] += 26;
+        else if (islower(cipher[i]) && plain[i] < 'a')
+            plain[i] += 26;
+        
+        printf("%c", plain[i]);
+    }
 
-    return result
+    printf("\n");
+    return 0;
+}
 
-text = input("Enter text: ")
-shift = int(input("Enter shift value: "))
-
-encrypted_text = caesar_cipher(text, shift, "encrypt")
-print("Encrypted:", encrypted_text)
-
-decrypted_text = caesar_cipher(encrypted_text, shift, "decrypt")
-print("Decrypted:", decrypted_text)
 
 
 ```
@@ -60,5 +83,6 @@ print("Decrypted:", decrypted_text)
 
 
 OUTPUT :-
-![image](https://github.com/user-attachments/assets/596a28fb-b37e-4b03-a390-c824dcbbdfd9)
+![image](https://github.com/user-attachments/assets/635d89d7-be53-4618-92fe-237bd23a44db)
+
 
